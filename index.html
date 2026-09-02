@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waheguru Ji Mehar Kreo</title>
+<meta name="description" content="ਵਾਹਿਗੁਰੂ ਜੀ ਮਿਹਰ ਕਰਿਓ — Waheguru Ji Mehar Kreo">
+<meta name="theme-color" content="#fdf7ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Gurmukhi:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  /* ---------- daylight: soft first-light ---------- */
+  :root{
+    --sky-top:#fdfaf5;
+    --sky-mid:#fdf1e0;
+    --sky-low:#f8ddbd;
+    --sun:255,193,120;
+    --ink:#4a3a2c;
+    --ink-soft:rgba(74,58,44,.62);
+    --ink-faint:rgba(74,58,44,.40);
+    --ink-ghost:rgba(74,58,44,.24);
+    --accent:#dd9646;
+    --mote:255,236,205;
+    --mote-alpha:.85;
+    --halo:255,206,150;
+    --halo-alpha:.34;
+    --glow-strength:.20;
+  }
+
+  /* ---------- night: same calm, dimmed ---------- */
+  @media (prefers-color-scheme:dark){
+    :root{
+      --sky-top:#12131c;
+      --sky-mid:#1b1a25;
+      --sky-low:#2b2333;
+      --sun:255,186,120;
+      --ink:#f4ece0;
+      --ink-soft:rgba(244,236,224,.62);
+      --ink-faint:rgba(244,236,224,.40);
+      --ink-ghost:rgba(244,236,224,.22);
+      --accent:#f0b878;
+      --mote:255,226,190;
+      --mote-alpha:.55;
+      --halo:255,196,140;
+      --halo-alpha:.16;
+      --glow-strength:.30;
+    }
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+
+  body{
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 118%,
+        rgba(var(--sun),.55) 0%,
+        rgba(var(--sun),0) 62%),
+      linear-gradient(180deg,
+        var(--sky-top) 0%,
+        var(--sky-mid) 52%,
+        var(--sky-low) 100%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:'Cormorant Garamond',Georgia,serif;
+    display:grid;
+    place-items:center;
+    min-height:100svh;
+    padding:2.5rem 1.5rem 4.5rem;
+    overflow:hidden;
+    position:relative;
+    text-align:center;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* soft rising light behind the words */
+  .halo{
+    position:fixed;
+    left:50%;top:46%;
+    width:min(92vw,720px);
+    height:min(92vw,720px);
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle at center,
+      rgba(var(--halo),var(--halo-alpha)) 0%,
+      rgba(var(--halo),calc(var(--halo-alpha) * .35)) 40%,
+      rgba(var(--halo),0) 70%);
+    filter:blur(30px);
+    z-index:0;
+    pointer-events:none;
+    animation:breathe 14s ease-in-out infinite;
+  }
+
+  /* drifting motes of light */
+  .motes{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .mote{
+    position:absolute;
+    bottom:-8vh;
+    width:3px;height:3px;
+    border-radius:50%;
+    background:rgba(var(--mote),var(--mote-alpha));
+    box-shadow:0 0 7px rgba(var(--mote),.85);
+    opacity:0;
+    animation:drift linear infinite;
+  }
+
+  main{position:relative;z-index:2;max-width:58rem}
+
+  .gurmukhi{
+    font-family:'Noto Serif Gurmukhi',serif;
+    font-weight:500;
+    font-size:clamp(2.1rem,8vw,5.1rem);
+    line-height:1.5;
+    color:var(--ink);
+    text-shadow:0 0 46px rgba(var(--sun),var(--glow-strength));
+    padding-bottom:.1em;
+  }
+
+  .divider{
+    display:flex;align-items:center;justify-content:center;
+    gap:1.15rem;
+    margin:2.4rem auto 2rem;
+    max-width:18rem;
+  }
+  .divider span{
+    height:1px;flex:1;
+    background:linear-gradient(90deg,transparent,var(--ink-ghost),transparent);
+  }
+  .divider i{
+    width:5px;height:5px;
+    background:var(--accent);
+    border-radius:50%;
+    box-shadow:0 0 14px rgba(var(--sun),.9);
+  }
+
+  .roman{
+    font-size:clamp(.9rem,2.6vw,1.35rem);
+    letter-spacing:.4em;text-indent:.4em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  .meaning{
+    margin-top:1.6rem;
+    font-size:clamp(.92rem,2.2vw,1.15rem);
+    font-style:italic;font-weight:300;
+    color:var(--ink-faint);
+    line-height:1.75;
+  }
+
+  footer{
+    position:fixed;left:0;right:0;bottom:1.7rem;z-index:2;
+    font-size:.7rem;
+    letter-spacing:.32em;text-indent:.32em;
+    text-transform:uppercase;
+    color:var(--ink-ghost);
+  }
+
+  .reveal{opacity:0;transform:translateY(16px);animation:rise 2.1s cubic-bezier(.19,.62,.3,1) forwards}
+  .d1{animation-delay:.35s}
+  .d2{animation-delay:1.15s}
+  .d3{animation-delay:1.5s}
+  .d4{animation-delay:1.95s}
+  .d5{animation-delay:2.7s}
+
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  @keyframes breathe{
+    0%,100%{opacity:.75;transform:translate(-50%,-50%) scale(1)}
+    50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+  }
+  @keyframes drift{
+    0%{opacity:0;transform:translateY(0) translateX(0)}
+    12%{opacity:1}
+    88%{opacity:1}
+    100%{opacity:0;transform:translateY(-118vh) translateX(var(--sway,14px))}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+    .mote{opacity:.5}
+  }
+
+  @media (max-width:430px){
+    .roman{letter-spacing:.26em;text-indent:.26em}
+    .divider{margin:2rem auto 1.7rem}
+    footer{bottom:1.2rem}
+  }
+</style>
+</head>
+<body>
+
+  <div class="halo" aria-hidden="true"></div>
+  <div class="motes" id="motes" aria-hidden="true"></div>
+
+  <main>
+    <h1 class="gurmukhi reveal d1" lang="pa">ਵਾਹਿਗੁਰੂ ਜੀ ਮਿਹਰ ਕਰਿਓ</h1>
+
+    <div class="divider reveal d2" aria-hidden="true"><span></span><i></i><span></span></div>
+
+    <p class="roman reveal d3" lang="pa-Latn">Waheguru Ji Mehar Kreo</p>
+
+    <p class="meaning reveal d4" lang="en">Wondrous Lord, bless us with your grace</p>
+  </main>
+
+  <footer class="reveal d5">jagroopgill.com</footer>
+
+<script>
+  (function () {
+    var wrap = document.getElementById('motes');
+    if (!wrap) return;
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 26; i++) {
+      var m = document.createElement('div');
+      m.className = 'mote';
+      m.style.left = (Math.random() * 100).toFixed(2) + '%';
+      m.style.animationDuration = (22 + Math.random() * 26).toFixed(1) + 's';
+      m.style.animationDelay = (-Math.random() * 40).toFixed(1) + 's';
+      m.style.setProperty('--sway', (Math.random() * 90 - 45).toFixed(0) + 'px');
+      var s = (0.5 + Math.random() * 1.3).toFixed(2);
+      m.style.transform = 'scale(' + s + ')';
+      frag.appendChild(m);
+    }
+    wrap.appendChild(frag);
+  })();
+</script>
+
+</body>
+</html>
